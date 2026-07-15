@@ -1,13 +1,14 @@
 function Home() {
-    return (
-        <div>
-            <h1>Welcome!</h1>
-            
-            <p>
-                Manage teams, schedules, player scores, and tournament standings.
-            </p>
-        </div>
-    );
+  return (
+    <main style={{ padding: "40px" }}>
+      <h1>Welcome to the Tennis Tournament Manager</h1>
+
+      <p>
+        This website allows tournament administrators, captains, and
+        players to manage teams, schedules, scores, and rankings.
+      </p>
+    </main>
+  );
 }
 
 export default Home;

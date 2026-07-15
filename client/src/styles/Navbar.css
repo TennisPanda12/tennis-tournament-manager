@@ -1,0 +1,32 @@
+nav {
+    background-color: #1b5e20;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+}
+
+nav h2 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+
+    display: flex;
+    gap: 30px;
+
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    cursor: pointer;
+}
+
+nav li:hover {
+    color: #b9f6ca
+}
