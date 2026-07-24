@@ -1,12 +1,17 @@
+import Hero from "../../components/common/Hero";
+import QuickLinks from "../../components/common/QuickLinks";
+import UpcomingMatches from "../../components/matches/UpcomingMatches";
+import StandingsPreview from "../../components/standings/StandingsPreview";
+import Announcements from "../../components/common/Announcements";
+
 function Home() {
   return (
-    <main style={{ padding: "40px" }}>
-      <h1>Welcome to the Tennis Tournament Manager</h1>
-
-      <p>
-        This website allows tournament administrators, captains, and
-        players to manage teams, schedules, scores, and rankings.
-      </p>
+    <main>
+      <Hero />
+      <QuickLinks />
+      <UpcomingMatches />
+      <StandingsPreview />
+      <Announcements />
     </main>
   );
 }
