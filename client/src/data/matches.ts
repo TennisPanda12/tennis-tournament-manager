@@ -1,0 +1,62 @@
+import type { Match } from "../types/Match";
+
+export const matches: Match[] = [
+  {
+    id: 1,
+    date: "2026-06-20",
+    time: "10:00 AM",
+    location: "Tennis Center",
+    homeCaptain: "Smith",
+    awayCaptain: "Patel",
+    completed: false,
+    tournament_id: 1,
+    courts: [
+      {
+        courtNumber: 1,
+        homePlayers: [],
+        awayPlayers: [],
+        score: {
+          set1Home: "0",
+          set1Away: "0",
+          set2Home: "0",
+          set2Away: "0",
+          tiebreakHome: "0",
+          tiebreakAway: "0",
+        },
+      },
+    ],
+  },
+  {
+    id: 2,
+    date: "2026-06-21",
+    time: "10:00 AM",
+    location: "Tennis Center",
+    homeCaptain: "Smith",
+    awayCaptain: "Patel",
+    completed: false,
+    tournament_id: 1,
+    courts: [],
+  },
+  {
+    id: 3,
+    date: "2026-06-27",
+    time: "10:00 AM",
+    location: "Tennis Center",
+    homeCaptain: "Smith",
+    awayCaptain: "Patel",
+    completed: false,
+    tournament_id: 1,
+    courts: [],
+  },
+  {
+    id: 4,
+    date: "2026-06-28",
+    time: "10:00 AM",
+    location: "Tennis Center",
+    homeCaptain: "Smith",
+    awayCaptain: "Patel",
+    completed: false,
+    tournament_id: 1,
+    courts: [],
+  },
+];

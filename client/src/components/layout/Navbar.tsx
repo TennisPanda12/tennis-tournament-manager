@@ -1,40 +1,132 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Navbar.css";
-import { Link } from "react-router-dom";
+import { supabase } from "../../lib/supabaseClient";
 
-function Navbar(){
+type UserRole = "admin" | "captain" | "player";
 
-return(
+function Navbar() {
+  const navigate = useNavigate();
 
-<nav className="navbar">
+  const [role, setRole] = useState<UserRole | null>(null);
 
-<div className="logo">
+  useEffect(() => {
+    async function loadProfile() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-Windyke Tennis League
+      if (!user) {
+        setRole(null);
+        return;
+      }
 
-</div>
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("role, captain")
+        .eq("id", user.id)
+        .single();
 
-<ul className="nav-links">
+      if (error || !profile) {
+        console.error("Profile error:", error);
+        setRole(null);
+        return;
+      }
 
-<li><Link to="/">Home</Link></li>
+      setRole(profile.role as UserRole);
+    }
 
-<li><Link to="/schedule">Schedule</Link></li>
+    loadProfile();
 
-<li><Link to="/standings">Standings</Link></li>
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(() => {
+      loadProfile();
+    });
 
-<li><Link to="/teams">Teams</Link></li>
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
-<li><Link to="/about">About</Link></li>
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
 
-<li><Link to="/rules">Rules</Link></li>
+    if (error) {
+      console.error("Logout error:", error);
+      alert("Unable to log out.");
+      return;
+    }
 
-<li><Link to="/login">Login</Link></li>
+    setRole(null);
+    navigate("/login");
+  };
 
-</ul>
+  return (
+    <nav className="navbar">
+      <div className="logo">
+        Windyke Tennis League
+      </div>
 
-</nav>
+      <ul className="nav-links">
+        <li>
+          <Link to="/">Home</Link>
+        </li>
 
-);
+        <li>
+          <Link to="/schedule">Schedule</Link>
+        </li>
 
+        <li>
+          <Link to="/standings">Standings</Link>
+        </li>
+
+        <li>
+          <Link to="/teams">Teams</Link>
+        </li>
+
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+
+        <li>
+          <Link to="/rules">Rules</Link>
+        </li>
+
+        {!role && (
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
+
+        {role === "admin" && (
+          <li>
+            <Link to="/admin">Admin Dashboard</Link>
+          </li>
+        )}
+
+        {role === "captain" && (
+          <li>
+            <Link to="/captain">Captain Dashboard</Link>
+          </li>
+        )}
+
+        {role === "player" && (
+          <li>
+            <Link to="/player">Player Dashboard</Link>
+          </li>
+        )}
+
+        {role && (
+          <li>
+            <button type="button" onClick={handleLogout}>
+              Log Out
+            </button>
+          </li>
+        )}
+      </ul>
+    </nav>
+  );
 }
 
 export default Navbar;
